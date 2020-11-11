@@ -168,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bGi-u2-xU5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1782.608695652174" y="422.54464285714283"/>
+            <point key="canvasLocation" x="1783" y="445"/>
         </scene>
         <!--Add Location-->
         <scene sceneID="Dkw-Xk-fMH">
@@ -249,6 +249,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6So-R1-CJa">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="bA3-Vr-rRM" id="IQp-4z-Zyr"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjA-MG-ceg" customClass="LoginButton" customModule="On_the_Map" customModuleProvider="target">
                                 <rect key="frame" x="50" y="762" width="314" height="50"/>
@@ -276,7 +279,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gvf-ZB-ss0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2869.5652173913045" y="-889.28571428571422"/>
+            <point key="canvasLocation" x="2675" y="-889"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="Hd1-K4-QOv">
@@ -288,6 +291,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rUP-LQ-HkV">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <connections>
+                                    <outlet property="delegate" destination="XF9-Zv-edg" id="1cg-Nr-4hj"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WiS-nX-0JZ"/>

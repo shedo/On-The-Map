@@ -22,7 +22,9 @@ class TabBarViewController: UITabBarController{
     }
     
     @IBAction func refreshData(_ sender: Any) {
+        showLoader(show: true)
         Client.getStudentLocations(completion: { (studentInformation, error) in
+            self.showLoader(show: false)
             StudentLocationModel.locations = studentInformation
         })
     }

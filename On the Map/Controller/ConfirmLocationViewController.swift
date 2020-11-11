@@ -36,7 +36,7 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinColor = .red
+            pinView!.pinTintColor = .red
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         else {
@@ -49,31 +49,28 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             if let toOpen = view.annotation?.subtitle! {
-                UIApplication.shared.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
+                if let urlToOpen = URL(string: toOpen) {
+                    UIApplication.shared.open(urlToOpen, options: [:], completionHandler: nil)
+                } else {
+                    self.showErrorAlertDialog(title: "Error", message: "No valid url to open")
+                }
             }
         }
     }
     
     
     @IBAction func addLocation(_ sender: Any) {
+        showLoader(show: true)
         Client.addLocation(locationData: self.newLocation, completion: addLocationHandler(success:error:))
     }
     
     func addLocationHandler(success: Bool, error: Error?){
         if success {
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
+            self.showLoader(show: false)
+            self.navigationController?.popViewController(animated: true)
         }else{
-            DispatchQueue.main.async {
-                self.showErrorAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
-            }
+            self.showErrorAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
         }
-    }
-    
-    func showErrorAlertDialog(title:String, message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
+        _ = navigationController?.popToRootViewController(animated: true)
     }
 }

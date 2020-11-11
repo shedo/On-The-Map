@@ -29,7 +29,7 @@ class AddLocationViewController: UIViewController {
     
     @IBAction func findLocation(_ sender: Any) {
         if myLocationText.text == "" || myLinkToShare.text == "" {
-            showErrorAlertDialog(title: "Missing required fields", message: "You should not leave any field empty")
+            self.showErrorAlertDialog(title: "Missing required fields", message: "You should not leave any field empty")
         }
         else{
             //forward written string geocode
@@ -46,17 +46,9 @@ class AddLocationViewController: UIViewController {
                     let longitude = (placemark.location?.coordinate.longitude)!
                     
                     self.newLocation = NewLocation(locationText: self.myLocationText.text ?? "", locationLink: self.myLinkToShare.text ?? "", latitude: latitude, longitude: longitude)
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "confirmLocation", sender: nil)
-                    }
+                    self.performSegue(withIdentifier: "confirmLocation", sender: nil)
                 }
             }
         }
-    }
-    
-    func showErrorAlertDialog(title:String, message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
     }
 }

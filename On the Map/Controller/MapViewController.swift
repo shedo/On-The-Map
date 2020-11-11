@@ -15,7 +15,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        showLoader(show: true)
         Client.getStudentLocations(completion: { (studentInformation, error) in
+            self.showLoader(show: false)
             if error == nil {
                 StudentLocationModel.locations = studentInformation
                 self.loadAnnotation()
@@ -59,7 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinColor = .red
+            pinView!.pinTintColor = .red
             pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         else {
@@ -72,14 +74,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             if let toOpen = view.annotation?.subtitle! {
-                UIApplication.shared.open(URL(string: toOpen)!, options: [:], completionHandler: nil)
+                if let urlToOpen = URL(string: toOpen) {
+                    UIApplication.shared.open(urlToOpen, options: [:], completionHandler: nil)
+                } else {
+                    self.showErrorAlertDialog(title: "Error", message: "No valid url to open")
+                }
             }
         }
-    }
-    
-    func showErrorAlertDialog(title:String, message: String) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
     }
 }
