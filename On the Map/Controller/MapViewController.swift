@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -22,7 +22,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 StudentLocationModel.locations = studentInformation
                 self.loadAnnotation()
             } else {
-                self.showErrorAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
+                self.showAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
             }
         })
     }
@@ -51,6 +51,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         self.mapView.addAnnotations(annotations)
     }
+
+}
+
+extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -77,7 +81,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 if let urlToOpen = URL(string: toOpen) {
                     UIApplication.shared.open(urlToOpen, options: [:], completionHandler: nil)
                 } else {
-                    self.showErrorAlertDialog(title: "Error", message: "No valid url to open")
+                    self.showAlertDialog(title: "Error", message: "No valid url to open")
                 }
             }
         }

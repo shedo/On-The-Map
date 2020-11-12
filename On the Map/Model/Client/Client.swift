@@ -153,7 +153,8 @@ class Client {
     }
     
     class func addLocation(locationData: NewLocation, completion: @escaping (Bool, Error?) -> Void) {
-        let body = AddLocationRequest(uniqueKey: "1234", firstName: UserModel.firstName, lastName: UserModel.lastName, mapString: locationData.locationText ?? "", mediaURL: locationData.locationLink ?? "", latitude: String(format: "%d",locationData.latitude ?? 0.0), longitude: String(format: "%d",locationData.longitude ?? 0.0))
+        let body = AddLocationRequest(uniqueKey: Auth.accountKey, firstName: UserModel.firstName, lastName: UserModel.lastName, mapString: locationData.locationText ?? "", mediaURL: locationData.locationLink ?? "", latitude: locationData.latitude ?? 0.0, longitude: locationData.longitude ?? 0.0)
+        print(body)
         taskForPOSTRequest(url: Endpoints.addStudentLocation.url, responseType: AddLocationResponse.self, body: body) { (response, error) in
             if let response = response {
                 completion(true, nil)

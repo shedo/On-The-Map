@@ -14,10 +14,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         emailTextField.text = ""
         passwordTextField.text = ""
@@ -48,11 +44,11 @@ class LoginViewController: UIViewController {
                     mainTabBarController.modalPresentationStyle = .fullScreen
                     self.present(mainTabBarController, animated: true, completion: nil)
                 } else {
-                    self.showErrorAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
+                    self.showAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
                 }
             })
         } else {
-            self.showErrorAlertDialog(title: "Login Failed", message: error?.localizedDescription ?? "")
+            self.showAlertDialog(title: "Login Failed", message: error?.localizedDescription ?? "")
         }
     }
 }

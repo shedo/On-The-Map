@@ -12,10 +12,10 @@ extension UIViewController {
     
     static var spinner: UIActivityIndicatorView?
     
-    func showErrorAlertDialog(title:String, message: String) {
+    func showAlertDialog(title:String, message: String) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        show(alertVC, sender: nil)
+        present(alertVC, animated: true, completion:nil)
     }
     
     func showLoader(show: Bool) {

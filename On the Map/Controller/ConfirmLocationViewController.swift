@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
+class ConfirmLocationViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     var newLocation: NewLocation!
@@ -28,7 +28,29 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
         annotations.append(annotation)
         
         self.mapView.addAnnotations(annotations)
+        
+        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        self.mapView.setRegion(region, animated: true)
     }
+    
+    
+    @IBAction func addLocation(_ sender: Any) {
+        showLoader(show: true)
+        Client.addLocation(locationData: self.newLocation, completion: addLocationHandler(success:error:))
+    }
+    
+    func addLocationHandler(success: Bool, error: Error?){
+        self.showLoader(show: false)
+        if success {
+            self.navigationController?.popViewController(animated: true)
+        }else{
+            self.showAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
+        }
+        _ = navigationController?.popToRootViewController(animated: true)
+    }
+}
+
+extension ConfirmLocationViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
@@ -52,25 +74,9 @@ class ConfirmLocationViewController: UIViewController, MKMapViewDelegate {
                 if let urlToOpen = URL(string: toOpen) {
                     UIApplication.shared.open(urlToOpen, options: [:], completionHandler: nil)
                 } else {
-                    self.showErrorAlertDialog(title: "Error", message: "No valid url to open")
+                    self.showAlertDialog(title: "Error", message: "No valid url to open")
                 }
             }
         }
-    }
-    
-    
-    @IBAction func addLocation(_ sender: Any) {
-        showLoader(show: true)
-        Client.addLocation(locationData: self.newLocation, completion: addLocationHandler(success:error:))
-    }
-    
-    func addLocationHandler(success: Bool, error: Error?){
-        if success {
-            self.showLoader(show: false)
-            self.navigationController?.popViewController(animated: true)
-        }else{
-            self.showErrorAlertDialog(title: "Error", message: error?.localizedDescription ?? "")
-        }
-        _ = navigationController?.popToRootViewController(animated: true)
     }
 }

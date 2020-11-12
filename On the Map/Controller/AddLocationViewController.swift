@@ -29,7 +29,7 @@ class AddLocationViewController: UIViewController {
     
     @IBAction func findLocation(_ sender: Any) {
         if myLocationText.text == "" || myLinkToShare.text == "" {
-            self.showErrorAlertDialog(title: "Missing required fields", message: "You should not leave any field empty")
+            self.showAlertDialog(title: "Missing required fields", message: "You should not leave any field empty")
         }
         else{
             //forward written string geocode
@@ -37,7 +37,7 @@ class AddLocationViewController: UIViewController {
             geocoder.geocodeAddressString(myLocationText.text ?? "") { (placemarks, error) in
                 if (placemarks?.count == 0 || error != nil){
                     DispatchQueue.main.async {
-                        self.showErrorAlertDialog(title: "No Address Found", message: "Please write a valid address")
+                        self.showAlertDialog(title: "No Address Found", message: "Please write a valid address")
                     }
                 } else {
                     let topResult: CLPlacemark = (placemarks?[0])!
